@@ -1,0 +1,23 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+  <file>Icons/bike_new.png</file>
+  <file>Icons/bike_save.png</file>
+  <file>Icons/bike_open.png</file>
+  <file>Icons/bike_save_as.png</file>
+  <file>Icons/green.png</file>
+  <file>Icons/white.png</file>
+  <file>Icons/orange.png</file>
+  <file>Icons/none.png</file>
+  <file>Icons/blue.png</file>
+  <file>Icons/red.png</file>
+  <file>Icons/robotBlue.png</file>
+  <file>Icons/yellow.png</file>
+  <file>Icons/delete.png</file>
+  <file>Icons/waistbands.png</file>
+  <file>Icons/headAngle.png</file>
+  <file>Icons/camDown.png</file>
+  <file>Icons/camUp.png</file>
+  <file>Icons/arrow_refresh.png</file>
+  <file>Icons/upload.png</file>
+</qresource>
+</RCC>

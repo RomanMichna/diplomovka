@@ -1,0 +1,15 @@
+motion_id = stopBall
+
+label start         
+"HY  HP  LSR  LEY  LER  RSR  REY  RER  LHYP LHR  LHP  LKP  LAP  LAR  RHYP RHR  RHP  RKP  RAP  RAR  Int  Dur
+"head (pan, tilt),
+"left arm(shoulder pitch/roll, elbow yaw/roll),
+"right arm (shoulder pitch/roll, elbow yaw/roll),
+"left leg(hip yaw-pitch/roll/pitch, knee pitch, ankle pitch/roll),
+"right leg (hip yaw-pitch5/roll/pitch,knee pitch, ankle pitch/roll)
+
+
+label repeat
+* * * * * * * * * * -60 -10 3 50 -20 * -60 -10 3 50 -20 *  1 250
+transition stopBall stopBall repeat
+transition allMotions extern start       

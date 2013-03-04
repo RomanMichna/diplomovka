@@ -1,0 +1,28 @@
+motion_id = extern
+
+"This motion is entry point for SpecialAction from other motion modules
+
+label start
+
+"All mofs must be enumerated here
+
+transition playDead playDead start
+
+transition standUpBackNao standUpBackNao start
+transition standUpFrontNao standUpFrontNao start
+transition sitDown sitDown start
+transition sitDownKeeper sitDownKeeper start
+transition sumoPosition sumoPosition start
+transition genuflect genuflect start
+transition goUp goUp start
+transition kickSidewardsNao kickSidewardsNao start
+transition afterGenuflect afterGenuflect start
+transition keeperJumpLeft keeperJumpLeft start
+transition keeperStandJumpLeft keeperStandJumpLeft start
+transition keeperJumpLeftSim keeperJumpLeftSim start
+transition keeperJumpLeftPenalty keeperJumpLeftPenalty start
+transition keeperJumpLeftSign keeperJumpLeftSign start
+transition kickDiagonalNao kickDiagonalNao start
+transition stopBall stopBall start
+"This line must be the last one
+transition extern extern start

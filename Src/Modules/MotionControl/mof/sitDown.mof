@@ -1,0 +1,21 @@
+ motion_id = sitDown
+"sit down after standing
+
+label start
+
+"HY  HP  LSR  LEY  LER  RSR  REY  RER  LHYP LHR  LHP  LKP  LAP  LAR  RHYP RHR  RHP  RKP  RAP  RAR  Int  Dur
+
+
+0 0.7 -40.800000 9.400000 4.6 -2.6 -40.800000 9.400000 4.6 -2.6 0.1 0.3 -57.9 123.8 -67.8 0.2 0.1 -0.1 -57.7 124 -67.6 -0.1 1 500
+
+0 0.7 -51.300000 3.500000 14.7 -35.8 -51.300000 3.500000 14.7 -35.8 0.1 0.3 -57.9 123.8 -67.8 0.2 0.1 -0.1 -57.7 124 -67.6 -0.1 1 500
+
+- - - - - - - - - - - - -57.9 - - - - - -57.9 - - - 1 500
+
+label repeat
+
+- - - - - - - - - - - - - - - - - - - - - - 1 100
+
+transition sitDown sitDown repeat
+
+transition allMotions extern start

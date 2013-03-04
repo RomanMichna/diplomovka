@@ -1,0 +1,521 @@
+Index: src/app/plugins/SharedMemory.cpp
+===================================================================
+--- src/app/plugins/SharedMemory.cpp	(revision 0)
++++ src/app/plugins/SharedMemory.cpp	(revision 0)
+@@ -0,0 +1,82 @@
++/**
++ * @file Platform/linux/SharedMemory.cpp
++ * A simplified interface to access shared memory for inter process communication.
++ * @author <a href="afabisch@tzi.de">Alexander Fabisch</a>
++ */
++#include "SharedMemory.h"
++
++SharedMemory::SharedMemory(const std::string& identifier, size_t maxSize)
++    : identifier(identifier),
++      maxSize(maxSize),
++      fileDescriptor(-1),
++      sharedMemory(MAP_FAILED),
++      semaphore(SEM_FAILED),
++      successful(true),
++      initialized(false)
++{
++  reinitialize(identifier);
++}
++
++SharedMemory::~SharedMemory()
++{
++  closeAccess();
++}
++
++void SharedMemory::reinitialize(const std::string& identifier)
++{
++  closeAccess();
++
++  this->identifier = identifier;
++  successful = true;
++  initialized = false;
++
++  fileDescriptor = shm_open(identifier.c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
++  if(fileDescriptor < 0)
++  {
++    successful = false;
++    closeAccess();
++  }
++
++  if(ftruncate(fileDescriptor, maxSize) < 0)
++  {
++    successful = false;
++    closeAccess();
++  }
++
++  sharedMemory = mmap(0, maxSize, PROT_WRITE, MAP_SHARED, fileDescriptor, 0);
++  if(sharedMemory == MAP_FAILED)
++  {
++    successful = false;
++    closeAccess();
++  }
++
++  semaphore = sem_open(("/" + identifier).c_str(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR, 0);
++  if(semaphore == SEM_FAILED)
++  {
++    successful = false;
++    closeAccess();
++  }
++}
++
++void SharedMemory::closeAccess()
++{
++  if(fileDescriptor != -1)
++  {
++    close(fileDescriptor);
++    fileDescriptor = -1;
++  }
++
++  if(sharedMemory != MAP_FAILED)
++  {
++    munmap(sharedMemory, maxSize);
++    sharedMemory = MAP_FAILED;
++  }
++
++  if(semaphore != SEM_FAILED)
++  {
++    sem_close(semaphore);
++    semaphore = SEM_FAILED;
++  }
++
++  successful = false;
++}
+Index: src/app/plugins/ExchangeFormat.h
+===================================================================
+--- src/app/plugins/ExchangeFormat.h	(revision 0)
++++ src/app/plugins/ExchangeFormat.h	(revision 0)
+@@ -0,0 +1,29 @@
++#ifndef ExchangeFormat_H
++#define ExchangeFormat_H
++
++class ExchangeFormat
++{
++public:
++  class Robot
++  {
++  public:
++    float x, y, rot;
++    int id;
++  };
++
++  class Ball
++  {
++  public:
++    float x, y;
++  };
++
++  Robot yellow[5];
++  int yellowSize;
++  Robot blue[5];
++  int blueSize;
++  Ball ball;
++  bool ballSeen;
++  bool valid;
++};
++
++#endif
+Index: src/app/plugins/SharedMemory.h
+===================================================================
+--- src/app/plugins/SharedMemory.h	(revision 0)
++++ src/app/plugins/SharedMemory.h	(revision 0)
+@@ -0,0 +1,89 @@
++/**
++ * @file Platform/linux/SharedMemory.h
++ * A simplified interface to access shared memory for inter process communication.
++ * @author <a href="afabisch@tzi.de">Alexander Fabisch</a>
++ */
++#ifndef __SharedMemory_H__
++#define __SharedMemory_H__
++
++#include <sys/mman.h>
++#include <fcntl.h>
++#include <semaphore.h>
++#include <stdio.h>
++#include <string>
++#include <unistd.h>
++
++/**
++ * @class SharedMemory
++ * A simplified interface to access shared memory for inter process communication.
++ */
++class SharedMemory
++{
++  /** The name of the shared memory. The semaphore's name is "/identifier". */
++  std::string identifier;
++  /** The size of the shared memory. */
++  const size_t maxSize;
++
++  /** File descriptor for the shared memory. */
++  int fileDescriptor;
++  /** Pointer to the shared memory block. */
++  void* sharedMemory;
++  /** Semaphore to protect shared memory from concurrent access. */
++  sem_t* semaphore;
++
++  /** Flag that indicates the successful initialization of the shared memory. */
++  bool successful;
++  /** Flag that indicates if the memory value is initialized. */
++  bool initialized;
++
++public:
++  /**
++   * Constructor.
++   * @param identifier The name of the shared memory.
++   * @param maxSize The size of the shared memory.
++   */
++  SharedMemory(const std::string& identifier, size_t maxSize);
++  ~SharedMemory();
++
++  /** Use another shared memory. */
++  void reinitialize(const std::string& identifier);
++  /** Closes the shared memory interface. */
++  void closeAccess();
++  /** @return Was the initialization successful? */
++  bool success() { return successful; }
++  /** @return Is the memory initialized? */
++  bool memoryInitialized() { return initialized; }
++
++  /** Initializes the shared memory. */
++  template<class T>
++  void initializeMemory(const T& initialValue)
++  {
++    T* pointer = (T*) sharedMemory;
++    *pointer = initialValue;
++    sem_post(semaphore);
++    initialized = true;
++  }
++
++  /** Writes to the shared memory. */
++  template<class T>
++  SharedMemory& operator<<(const T& value)
++  {
++    sem_wait(semaphore);
++    T* pointer = (T*) sharedMemory;
++    *pointer = value;
++    sem_post(semaphore);
++    return *this;
++  }
++
++  /** Reads from the shared memory. */
++  template<class T>
++  SharedMemory& operator>>(T& value)
++  {
++    sem_wait(semaphore);
++    value = *((T*) sharedMemory);
++    sem_post(semaphore);
++    return *this;
++  }
++};
++
++#endif
+Index: src/app/plugins/plugin_sslsharedmemoryoutput.cpp
+===================================================================
+--- src/app/plugins/plugin_sslsharedmemoryoutput.cpp	(revision 0)
++++ src/app/plugins/plugin_sslsharedmemoryoutput.cpp	(revision 0)
+@@ -0,0 +1,92 @@
++#include "plugin_sslsharedmemoryoutput.h"
++#include "ExchangeFormat.h"
++#include "messages_robocup_ssl_detection.pb.h"
++
++PluginSSLSharedMemoryOutput::PluginSSLSharedMemoryOutput(FrameBuffer * _fb, SharedMemory * shared_memory, const CameraParameters& camera_params, const RoboCupField& field)
++ : VisionPlugin(_fb), _camera_params(camera_params), _field(field), shared_memory(shared_memory)
++{
++
++}
++
++PluginSSLSharedMemoryOutput::~PluginSSLSharedMemoryOutput()
++{
++  shared_memory->closeAccess();
++  shared_memory = 0;
++}
++
++ProcessResult PluginSSLSharedMemoryOutput::process(FrameData * data, RenderOptions * options)
++{
++  (void)options;
++  if (data==0) return ProcessingFailed;
++
++  SSL_DetectionFrame * detection_frame = 0;
++
++  detection_frame=(SSL_DetectionFrame *)data->map.get("ssl_detection_frame");
++
++  ExchangeFormat f;
++  if(detection_frame)
++  {
++    f.valid = false;
++    f.yellowSize = detection_frame->robots_yellow_size();
++    for(int i = 0; i < f.yellowSize; i++)
++    {
++      const SSL_DetectionRobot& robot = detection_frame->robots_yellow(i);
++      float orientation = 0.0;
++      if(robot.has_orientation())
++        f.yellow[i].rot = robot.orientation();
++      f.yellow[i].x = robot.x();
++      f.yellow[i].y = robot.y();
++      f.yellow[i].id = (int) robot.robot_id();
++    }
++    f.blueSize = detection_frame->robots_blue_size();
++    for(int i = 0; i < f.blueSize; i++)
++    {
++      const SSL_DetectionRobot& robot = detection_frame->robots_blue(i);
++      float orientation = 0.0;
++      if(robot.has_orientation())
++        f.blue[i].rot = robot.orientation();
++      f.blue[i].x = robot.x();
++      f.blue[i].y = robot.y();
++      f.blue[i].id = (int) robot.robot_id();
++    }
++
++    float confidence = 0.0f;
++    for(int i = 0; i < detection_frame->balls_size(); i++)
++    {
++      const SSL_DetectionBall& ball = detection_frame->balls(i);
++      if(ball.confidence() < confidence)
++        continue;
++
++      confidence = ball.confidence();
++      f.ball.x = ball.x();
++      f.ball.y = ball.y();
++    }
++    f.ballSeen = confidence != 0.0f;
++    f.valid = true;
++  }
++  else
++    f.valid = false;
++
++  if(shared_memory->memoryInitialized())
++    (*shared_memory) << f;
++  else
++    shared_memory->initializeMemory(f);
++
++  return ProcessingOk;
++}
++
++string PluginSSLSharedMemoryOutput::getName() {
++  return "Shared Memory Output";
++}
++
++PluginSSLSharedMemoryOutputSettings::PluginSSLSharedMemoryOutputSettings()
++{
++  settings = new VarList("Shared Memory Output");
++
++  settings->addChild(memory_name = new VarString("Shared Memory Name","sslvisionframe"));
++}
++  
++VarList * PluginSSLSharedMemoryOutputSettings::getSettings()
++{
++  return settings;
++}
+Index: src/app/plugins/plugin_sslsharedmemoryoutput.h
+===================================================================
+--- src/app/plugins/plugin_sslsharedmemoryoutput.h	(revision 0)
++++ src/app/plugins/plugin_sslsharedmemoryoutput.h	(revision 0)
+@@ -0,0 +1,37 @@
++#ifndef PLUGIN_SSLSHAREDMEMORYOUTPUT_H
++#define PLUGIN_SSLSHAREDMEMORYOUTPUT_H
++
++#include <visionplugin.h>
++#include "camera_calibration.h"
++#include "field.h"
++#include "timer.h"
++#include "SharedMemory.h"
++
++/**
++	@author Alexander Fabisch
++*/
++class PluginSSLSharedMemoryOutput : public VisionPlugin
++{
++protected:
++ const CameraParameters& _camera_params;
++ const RoboCupField& _field;
++ SharedMemory* shared_memory;
++public:
++    PluginSSLSharedMemoryOutput(FrameBuffer * _fb, SharedMemory* shared_memory, const CameraParameters& camera_params, const RoboCupField& field);
++
++    ~PluginSSLSharedMemoryOutput();
++
++    virtual ProcessResult process(FrameData * data, RenderOptions * options);
++    virtual string getName();
++};
++
++class PluginSSLSharedMemoryOutputSettings {
++public:
++  VarList * settings;
++  VarString * memory_name;
++
++  PluginSSLSharedMemoryOutputSettings();
++  VarList * getSettings();
++};
++
++#endif
+Index: src/app/gui/mainwindow.cpp
+===================================================================
+--- src/app/gui/mainwindow.cpp	(revision 195)
++++ src/app/gui/mainwindow.cpp	(working copy)
+@@ -136,8 +136,9 @@
+   world.push_back(root); 
+   world=VarXML::read( world,"settings.xml");
+ 
+-  //update network output settings from xml file
++  //update output settings from xml file
+   ((MultiStackRoboCupSSL*)multi_stack)->RefreshNetworkOutput();
++  ((MultiStackRoboCupSSL*)multi_stack)->RefreshSharedMemoryOutput();
+   multi_stack->start();
+ 
+   if (start_capture==true) {
+Index: src/app/stacks/multistack_robocup_ssl.h
+===================================================================
+--- src/app/stacks/multistack_robocup_ssl.h	(revision 195)
++++ src/app/stacks/multistack_robocup_ssl.h	(working copy)
+@@ -28,6 +28,7 @@
+ #include "plugin_publishgeometry.h"
+ #include "cmpattern_teamdetector.h"
+ #include "robocup_ssl_server.h"
++#include "plugin_sslsharedmemoryoutput.h"
+ #include "field.h"
+ using namespace std;
+ 
+@@ -47,12 +48,15 @@
+   CMPattern::TeamSelector * global_team_selector_yellow;
+   PluginSSLNetworkOutputSettings * global_network_output_settings;
+   RoboCupSSLServer * udp_server;
++  PluginSSLSharedMemoryOutputSettings * global_shared_memory_output_settings;
++  SharedMemory * shared_memory;
+   public:
+   MultiStackRoboCupSSL(RenderOptions * _opts, int cameras);
+   virtual string getSettingsFileName();
+   virtual ~MultiStackRoboCupSSL();
+   public slots:
+   void RefreshNetworkOutput();
++  void RefreshSharedMemoryOutput();
+ };
+ 
+ #endif
+Index: src/app/stacks/stack_robocup_ssl.cpp
+===================================================================
+--- src/app/stacks/stack_robocup_ssl.cpp	(revision 195)
++++ src/app/stacks/stack_robocup_ssl.cpp	(working copy)
+@@ -20,11 +20,12 @@
+ //========================================================================
+ #include "stack_robocup_ssl.h"
+ 
+-StackRoboCupSSL::StackRoboCupSSL(RenderOptions * _opts, FrameBuffer * _fb, int camera_id, RoboCupField * _global_field, PluginDetectBallsSettings * _global_ball_settings,PluginPublishGeometry * _global_plugin_publish_geometry, CMPattern::TeamSelector * _global_team_selector_blue, CMPattern::TeamSelector * _global_team_selector_yellow, RoboCupSSLServer * udp_server, string cam_settings_filename) : VisionStack("RoboCup Image Processing",_opts), global_field(_global_field), global_ball_settings(_global_ball_settings), global_team_selector_blue(_global_team_selector_blue), global_team_selector_yellow(_global_team_selector_yellow) {
++StackRoboCupSSL::StackRoboCupSSL(RenderOptions * _opts, FrameBuffer * _fb, int camera_id, RoboCupField * _global_field, PluginDetectBallsSettings * _global_ball_settings,PluginPublishGeometry * _global_plugin_publish_geometry, CMPattern::TeamSelector * _global_team_selector_blue, CMPattern::TeamSelector * _global_team_selector_yellow, RoboCupSSLServer * udp_server, SharedMemory * shared_memory, string cam_settings_filename) : VisionStack("RoboCup Image Processing",_opts), global_field(_global_field), global_ball_settings(_global_ball_settings), global_team_selector_blue(_global_team_selector_blue), global_team_selector_yellow(_global_team_selector_yellow) {
+     (void)_fb;
+     _camera_id=camera_id;
+     _cam_settings_filename=cam_settings_filename;
+     _udp_server = udp_server;
++    _shared_memory = shared_memory;
+     lut_yuv = new YUVLUT(4,6,6,cam_settings_filename + "-lut-yuv.xml");
+     lut_yuv->loadRoboCupChannels(LUTChannelMode_Numeric);
+     lut_yuv->addDerivedLUT(new RGBLUT(5,5,5,""));
+@@ -57,6 +58,8 @@
+ 
+     stack.push_back(new PluginSSLNetworkOutput(_fb,_udp_server,*camera_parameters,*global_field));
+ 
++    stack.push_back(new PluginSSLSharedMemoryOutput(_fb,_shared_memory,*camera_parameters,*global_field));
++
+     stack.push_back(_global_plugin_publish_geometry);
+ 
+     PluginVisualize * vis=new PluginVisualize(_fb,*camera_parameters,*global_field,*calib_field);
+Index: src/app/stacks/stack_robocup_ssl.h
+===================================================================
+--- src/app/stacks/stack_robocup_ssl.h	(revision 195)
++++ src/app/stacks/stack_robocup_ssl.h	(working copy)
+@@ -35,10 +35,12 @@
+ #include "plugin_detect_balls.h"
+ #include "plugin_detect_robots.h"
+ #include "plugin_sslnetworkoutput.h"
++#include "plugin_sslsharedmemoryoutput.h"
+ #include "plugin_publishgeometry.h"
+ #include "plugin_dvr.h"
+ #include "cmpattern_teamdetector.h"
+ #include "robocup_ssl_server.h"
++#include "SharedMemory.h"
+ 
+ using namespace std;
+ 
+@@ -60,8 +62,9 @@
+   CMPattern::TeamSelector * global_team_selector_yellow;
+   RoboCupCalibrationHalfField * calib_field;
+   RoboCupSSLServer * _udp_server;
++  SharedMemory * _shared_memory;
+   public:
+-  StackRoboCupSSL(RenderOptions * _opts, FrameBuffer * _fb, int camera_id, RoboCupField * _global_field, PluginDetectBallsSettings * _global_ball_settings, PluginPublishGeometry * _global_plugin_publish_geometry, CMPattern::TeamSelector * _global_team_selector_blue, CMPattern::TeamSelector * _global_team_selector_yellow, RoboCupSSLServer * udp_server, string cam_settings_filename);
++  StackRoboCupSSL(RenderOptions * _opts, FrameBuffer * _fb, int camera_id, RoboCupField * _global_field, PluginDetectBallsSettings * _global_ball_settings, PluginPublishGeometry * _global_plugin_publish_geometry, CMPattern::TeamSelector * _global_team_selector_blue, CMPattern::TeamSelector * _global_team_selector_yellow, RoboCupSSLServer * udp_server, SharedMemory * shared_memory, string cam_settings_filename);
+   virtual string getSettingsFileName();
+   virtual ~StackRoboCupSSL();
+ };
+Index: src/app/stacks/multistack_robocup_ssl.cpp
+===================================================================
+--- src/app/stacks/multistack_robocup_ssl.cpp	(revision 195)
++++ src/app/stacks/multistack_robocup_ssl.cpp	(working copy)
+@@ -19,6 +19,7 @@
+ */
+ //========================================================================
+ #include "multistack_robocup_ssl.h"
++#include "ExchangeFormat.h"
+ 
+ MultiStackRoboCupSSL::MultiStackRoboCupSSL(RenderOptions * _opts, int cameras) : MultiVisionStack("RoboCup SSL Multi-Cam",_opts) {
+   //add global field calibration parameter
+@@ -45,6 +46,12 @@
+ 
+   udp_server = new RoboCupSSLServer();
+ 
++  global_shared_memory_output_settings = new PluginSSLSharedMemoryOutputSettings();
++  settings->addChild(global_shared_memory_output_settings->getSettings());
++  connect(global_shared_memory_output_settings->memory_name,SIGNAL(wasEdited(VarType *)),this,SLOT(RefreshSharedMemoryOutput()));
++
++  shared_memory = new SharedMemory("sslvisiondata", sizeof(ExchangeFormat));
++
+   global_plugin_publish_geometry = new PluginPublishGeometry(0,udp_server,*global_field);
+ 
+   //add parameter for number of cameras
+@@ -52,7 +59,7 @@
+   unsigned int n = threads.size();
+   for (unsigned int i = 0; i < n;i++) {
+     threads[i]->setFrameBuffer(new FrameBuffer(5));
+-    threads[i]->setStack(new StackRoboCupSSL(_opts,threads[i]->getFrameBuffer(),i,global_field,global_ball_settings,global_plugin_publish_geometry,global_team_selector_blue, global_team_selector_yellow,udp_server,"robocup-ssl-cam-" + QString::number(i).toStdString()));
++    threads[i]->setStack(new StackRoboCupSSL(_opts,threads[i]->getFrameBuffer(),i,global_field,global_ball_settings,global_plugin_publish_geometry,global_team_selector_blue, global_team_selector_yellow,udp_server,shared_memory,"robocup-ssl-cam-" + QString::number(i).toStdString()));
+   }
+     //TODO: make LUT widgets aware of each other for easy data-sharing
+ }
+@@ -64,6 +71,7 @@
+ MultiStackRoboCupSSL::~MultiStackRoboCupSSL() {
+   stop();
+   delete udp_server;
++  delete shared_memory;
+   delete global_plugin_publish_geometry;
+   delete global_field;
+   delete global_ball_settings;
+@@ -82,3 +90,13 @@
+   }
+   udp_server->mutex.unlock();
+ }
++
++void MultiStackRoboCupSSL::RefreshSharedMemoryOutput()
++{
++  // TODO mutex??
++  shared_memory->reinitialize(global_shared_memory_output_settings->memory_name->getString());
++  if (!shared_memory->success()) {
++    fprintf(stderr,"ERROR WHEN TRYING TO OPEN SHARED MEMORY!\n");
++    fflush(stderr);
++  }
++}
+Index: CMakeLists.txt
+===================================================================
+--- CMakeLists.txt	(revision 195)
++++ CMakeLists.txt	(working copy)
+@@ -49,6 +49,8 @@
+ 	src/app/plugins/plugin_publishgeometry.cpp
+ 	src/app/plugins/plugin_runlength_encode.cpp
+ 	src/app/plugins/plugin_sslnetworkoutput.cpp
++	src/app/plugins/plugin_sslsharedmemoryoutput.cpp
++	src/app/plugins/SharedMemory.cpp
+ 	src/app/plugins/plugin_visualize.cpp
+ 	src/app/plugins/plugin_dvr.cpp
+ 	src/app/plugins/visionplugin.cpp

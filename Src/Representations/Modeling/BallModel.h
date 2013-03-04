@@ -1,0 +1,119 @@
+/**
+* @file BallModel.h
+*
+* Declaration of class BallModel
+*
+* @author <A href="mailto:timlaue@informatik.uni-bremen.de">Tim Laue</A>
+*/
+
+#pragma once
+
+#include "Tools/Math/Vector2.h"
+
+class Pose2D;
+
+/**
+ * @class BallState
+ *
+ * Base class for ball position and velocity.
+ */
+class BallState : public Streamable
+{
+  /** Streaming (with specifications) */
+  virtual void serialize(In* in, Out* out)
+  {
+    STREAM_REGISTER_BEGIN;
+    STREAM(position);
+    STREAM(velocity);
+    STREAM_REGISTER_FINISH;
+  }
+
+public:
+
+  Vector2<> position; /**< The position of the ball relative to the robot (in mm)*/
+  Vector2<> velocity; /**< The velocity of the ball relative to the robot (in mm/s)*/
+
+  /**
+  * Computes the position were a rolling ball is expected to stop rolling. (using uniform deceleration)
+  * @return The position relative to the robot (in mm)
+  */
+  Vector2<> getEndPosition(float ballFriction) const
+  {
+    return position + velocity * (velocity.abs() / (2.f * ballFriction));
+  }
+};
+
+/**
+ * @class BallModel
+ *
+ * Contains all current knowledge about the ball.
+ */
+class BallModel : public Streamable
+{
+  /** Streaming (with specifications) */
+  virtual void serialize(In* in, Out* out)
+  {
+    STREAM_REGISTER_BEGIN;
+    STREAM(lastPerception);
+    STREAM(estimate);
+    STREAM(timeWhenLastSeen);
+    STREAM(timeWhenDisappeared)
+    STREAM_REGISTER_FINISH;
+  }
+
+public:
+  /** Constructor */
+  BallModel() : timeWhenLastSeen(0), timeWhenDisappeared(0) {}
+
+  Vector2<> lastPerception; /**< The last seen position of the ball */
+  BallState estimate; /**< The state of the ball estimated from own observations; it is propagated even if the ball is not seen */
+  unsigned timeWhenLastSeen; /**< Time stamp, indicating what its name says */
+  unsigned timeWhenDisappeared; /**< The time when the ball was not seen in the image altough it should have been there */
+
+  /** Draws the estimate on the field */
+  void draw();
+
+  /** Draws the end position of the estimate on the field */
+  void drawEndPosition(float ballFriction) const;
+
+  /** Draw the ball model in scene */
+  void draw3D(const Pose2D& robotPose) const;
+};
+
+class GroundTruthBallModel : public BallModel
+{
+public:
+  /** Draws something*/
+  void draw();
+};
+
+/**
+* @class BallModelCompressed
+* A compressed version of BallModel used in team communication
+*/
+class BallModelCompressed : public BallModel
+{
+public:
+  /** Default constructor */
+  BallModelCompressed() {}
+
+  /** A copy constructor */
+  BallModelCompressed(const BallModel& ballModel) {(BallModel&) *this = ballModel;}
+
+  const BallModel& unpack() const {return *this;}
+
+public:
+  virtual void serialize(In* in, Out* out)
+  {
+    STREAM_REGISTER_BEGIN;
+    STREAM_COMPRESSED_POSITION(lastPerception);
+    Vector2<> position = estimate.position, velocity = estimate.velocity;
+    STREAM_COMPRESSED_POSITION(position);
+    STREAM_COMPRESSED_POSITION(velocity);
+    estimate.position = position;
+    estimate.velocity = velocity;
+    STREAM(timeWhenLastSeen);
+    STREAM(timeWhenDisappeared)
+    STREAM_REGISTER_FINISH;
+  }
+};

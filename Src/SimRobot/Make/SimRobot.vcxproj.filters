@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Icons">
+      <UniqueIdentifier>{4C130203-3F05-3D07-0831-6D292080F55F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".copy">
+      <UniqueIdentifier>{311302E2-B805-3D07-0831-0A29200D18C2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".Qt">
+      <UniqueIdentifier>{31870203-3F05-3D07-0831-0A29200D18B0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Debug\qrc_SimRobot.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Debug\moc_MainWindow.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Debug\moc_RegisteredDockWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Debug\moc_SceneGraphDockWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Debug\moc_StatusBar.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Release\qrc_SimRobot.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Release\moc_MainWindow.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Release\moc_RegisteredDockWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Release\moc_SceneGraphDockWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobot\Win32\Release\moc_StatusBar.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Src\SimRobot\Icons\SimRobot.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\application_side_tree.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\arrow_redo.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\arrow_undo.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\control_play_blue.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\control_start_blue.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\control_step_blue.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\cut.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\disk.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\folder.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\folder_page.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\page_copy.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\page_paste.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\tag_green.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobot\Icons\textfield.png">
+      <Filter>Icons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\Build\Factory\Win32\Debug\Factory.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\Factory\Win32\Release\Factory.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotCore2\Win32\Debug\SimRobotCore2.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotCore2\Win32\Release\SimRobotCore2.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotEditor\Win32\Debug\SimRobotEditor.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotEditor\Win32\Release\SimRobotEditor.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotHelp\Help\help.qch">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotHelp\Help\helpcollection.qhc">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotHelp\Win32\Debug\SimRobotHelp.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimRobotHelp\Win32\Release\SimRobotHelp.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimpleVehicle\Win32\Debug\SimpleVehicle.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Build\SimpleVehicle\Win32\Release\SimpleVehicle.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\glew\Win32\bin\glew32.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\libxml2\Win32\bin\libxml2.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtCLucene4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtCore4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtGui4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtHelp4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtNetwork4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtOpenGL4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtSql4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtSvg4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\QtXml4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\Util\qt\Win32\bin\sqldrivers\qsqlite4.dll">
+      <Filter>.copy</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

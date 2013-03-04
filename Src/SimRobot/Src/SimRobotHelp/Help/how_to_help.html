@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<Title>How to help</Title>
+</HEAD>
+
+<BODY>
+<h2>how to help</h2>
+<br>
+Es gibt verschiedene Elemente, die für einen vollständigen Hilfeeintrag notwendig sind:<br>
+<br>
+1. Die Hilfe-Datei. Die .htm-Datei liegt im hlp-Ordner. Sie enthält alle relevanten Hilfe-Informationen zum Thema. 
+In ihr sind alle HTML-Elemente verfügbar, zB Links, Tabellen usw. Der Doctype ist notwendigerweise in allen Dateien gleich. 
+Es existiert eine .css-Datei, die zur Gestaltung von Tabellen und anderen Elementen genutzt werden kann.<br>
+<br>
+2. Eintrag der Hilfe-Datei im Hilfe-Projekt (.hhp-Datei). Der Name der Datei wird mit Endung unter [FILES] einsortiert. 
+Dadurch wird die Datei beim kompilieren berücksichtigt.<br>
+<br>
+3. Eintrag der Hilfe-Datei im Inhaltsverzeichnis (.hhc-Datei). Diese Datei ist über Listen (LI) und Unterlisten (UL) strukturiert. 
+Jeder Eintrag besteht aus 4 Zeilen, diese können von einem anderen Objekt kopiert und an den entsprechenden 2 Stellen angepasst werden. 
+Die Tiefe der Listen und Unterlisten entspricht der Ordnerstruktur in der Übersicht der kompilierten Hilfe.<br>
+<br>
+4. optional: Soll die Seite über Stichworte im Index verfügbar sein, werden diese vor dem (/BODY) in der .htm definiert. 
+Die entsprechende Formatierung ist in den meisten vorhandenen htm-Dateien zu finden.<br>
+<br>
+5. optional: Soll die Datei über die Context-Hilfe erreichbar sein, muss in der Projektdatei (.hhp) im [ALIAS]-Abschnitt
+die entsprechende ID (nachzuschlagen in der HTMLDefines.h oder rosi.h) mit der neuen Datei verknüpft werden.<br>
+<br>
+6. optional: Wird die ROSI-Sprache erweitert und werden neue Sprachelemente hinzugefügt oder bestehende entfernt,
+ist die rosi.h anzupassen. Diese Datei wird zZ. nicht automatisiert erstellt. In der rosi.h sind die gleichen Dezimalzahlen
+zu verwenden wie in der Stringtabelle bei der Definition der keywords.<br>
+<br>
+
+<Object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<param name="Keyword" value="howto">
+</OBJECT>
+</BODY>
+</HTML>

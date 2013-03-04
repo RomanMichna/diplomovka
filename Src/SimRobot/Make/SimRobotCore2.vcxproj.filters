@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Parser">
+      <UniqueIdentifier>{C5740275-3F05-B007-0831-6F29200D185F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{C77F0203-3F6B-3D07-0831-0A29800D79CC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include=".Qt">
+      <UniqueIdentifier>{31870203-3F05-3D07-0831-0A29200D18B0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{57137503-3FA7-3D07-0831-0A29200D185F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation">
+      <UniqueIdentifier>{99876E03-A805-A607-0831-0A29950D85C0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation\Masses">
+      <UniqueIdentifier>{86876E03-8605-A607-0831-DE29AA0D858E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation\Geometries">
+      <UniqueIdentifier>{FE876E75-8605-FA07-6D31-E629DC0DF98E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation\Appearances">
+      <UniqueIdentifier>{B1876E03-A805-F607-7A31-0A8A9C7BF5FE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation\Sensors">
+      <UniqueIdentifier>{FE876E03-A878-8A07-0889-0A29AD0D858E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation\Motors">
+      <UniqueIdentifier>{9987E103-A805-A607-0831-ED29E20D85B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Icons">
+      <UniqueIdentifier>{4C130203-3F05-3D07-0831-6D292080F55F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Simulation\Actuators">
+      <UniqueIdentifier>{27cd8197-51bc-4ac0-b391-86aef693634e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Src\SimRobotCore2\Parser\Element.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Parser\Parser.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Parser\Reader.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Platform\Assert.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Platform\OffscreenRenderer.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Platform\System.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Appearances\Appearance.cpp">
+      <Filter>Simulation\Appearances</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Appearances\BoxAppearance.cpp">
+      <Filter>Simulation\Appearances</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Appearances\ComplexAppearance.cpp">
+      <Filter>Simulation\Appearances</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Appearances\CylinderAppearance.cpp">
+      <Filter>Simulation\Appearances</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Appearances\SphereAppearance.cpp">
+      <Filter>Simulation\Appearances</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Axis.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Body.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Compound.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Geometries\BoxGeometry.cpp">
+      <Filter>Simulation\Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Geometries\CylinderGeometry.cpp">
+      <Filter>Simulation\Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Geometries\Geometry.cpp">
+      <Filter>Simulation\Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Geometries\SphereGeometry.cpp">
+      <Filter>Simulation\Geometries</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\GraphicalObject.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Masses\BoxMass.cpp">
+      <Filter>Simulation\Masses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Masses\InertiaMatrixMass.cpp">
+      <Filter>Simulation\Masses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Masses\Mass.cpp">
+      <Filter>Simulation\Masses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Masses\SphereMass.cpp">
+      <Filter>Simulation\Masses</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Motors\ServoMotor.cpp">
+      <Filter>Simulation\Motors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Motors\VelocityMotor.cpp">
+      <Filter>Simulation\Motors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\PhysicalObject.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Scene.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\Accelerometer.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\ApproxDistanceSensor.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\Camera.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\DepthImageSensor.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\Gyroscope.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\SingleDistanceSensor.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\SimObject.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Simulation.cpp">
+      <Filter>Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Tools\Matrix3x3.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Tools\OpenGLTools.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Tools\Texture.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Tools\Vector3.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Debug\qrc_SimRobotCore2.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Debug\moc_ActuatorsWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Debug\moc_SensorWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Debug\moc_SimObjectWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Release\qrc_SimRobotCore2.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Release\moc_ActuatorsWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Release\moc_SensorWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include=".\..\Build\SimRobotCore2\Win32\Release\moc_SimObjectWidget.cpp">
+      <Filter>.Qt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\ActuatorsWidget.cpp" />
+    <ClCompile Include="..\Src\SimRobotCore2\CoreModule.cpp" />
+    <ClCompile Include="..\Src\SimRobotCore2\SensorWidget.cpp" />
+    <ClCompile Include="..\Src\SimRobotCore2\SimObjectRenderer.cpp" />
+    <ClCompile Include="..\Src\SimRobotCore2\SimObjectWidget.cpp" />
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Actuators\Actuator.cpp">
+      <Filter>Simulation\Actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Actuators\Hinge.cpp">
+      <Filter>Simulation\Actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Actuators\Joint.cpp">
+      <Filter>Simulation\Actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Actuators\Slider.cpp">
+      <Filter>Simulation\Actuators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\Sensor.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\SimRobotCore2\Simulation\Sensors\CollisionSensor.cpp">
+      <Filter>Simulation\Sensors</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Src\SimRobotCore2\Parser\Element.h">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Parser\Parser.h">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Parser\Reader.h">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Platform\Assert.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Platform\OffscreenRenderer.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Platform\System.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Appearances\Appearance.h">
+      <Filter>Simulation\Appearances</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Appearances\BoxAppearance.h">
+      <Filter>Simulation\Appearances</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Appearances\ComplexAppearance.h">
+      <Filter>Simulation\Appearances</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Appearances\CylinderAppearance.h">
+      <Filter>Simulation\Appearances</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Appearances\SphereAppearance.h">
+      <Filter>Simulation\Appearances</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Axis.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Body.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Compound.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Geometries\BoxGeometry.h">
+      <Filter>Simulation\Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Geometries\CylinderGeometry.h">
+      <Filter>Simulation\Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Geometries\Geometry.h">
+      <Filter>Simulation\Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Geometries\SphereGeometry.h">
+      <Filter>Simulation\Geometries</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\GraphicalObject.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Masses\BoxMass.h">
+      <Filter>Simulation\Masses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Masses\InertiaMatrixMass.h">
+      <Filter>Simulation\Masses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Masses\Mass.h">
+      <Filter>Simulation\Masses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Masses\SphereMass.h">
+      <Filter>Simulation\Masses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Motors\Motor.h">
+      <Filter>Simulation\Motors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Motors\ServoMotor.h">
+      <Filter>Simulation\Motors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Motors\VelocityMotor.h">
+      <Filter>Simulation\Motors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\PhysicalObject.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Scene.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\Accelerometer.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\ApproxDistanceSensor.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\Camera.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\DepthImageSensor.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\Gyroscope.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\SingleDistanceSensor.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\SimObject.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Simulation.h">
+      <Filter>Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Tools\Matrix3x3.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Tools\ODETools.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Tools\OpenGLTools.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Tools\Pose3.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Tools\Texture.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Tools\Vector3.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\CoreModule.h" />
+    <ClInclude Include="..\Src\SimRobotCore2\SimObjectRenderer.h" />
+    <ClInclude Include="..\Src\SimRobotCore2\SimRobotCore2.h" />
+    <ClInclude Include="..\Src\SimRobotCore2\Platform\OpenGL.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Actuators\Actuator.h">
+      <Filter>Simulation\Actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Actuators\Hinge.h">
+      <Filter>Simulation\Actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Actuators\Joint.h">
+      <Filter>Simulation\Actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Actuators\Slider.h">
+      <Filter>Simulation\Actuators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\Sensor.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\SimRobotCore2\Simulation\Sensors\CollisionSensor.h">
+      <Filter>Simulation\Sensors</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Src\SimRobotCore2\Icons\DragPlane.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\arrow_rotate_clockwise.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\brick.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\bricks.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\camera.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\chart_line.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\layers.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\link.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\note.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\opening_angle.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\slider.png">
+      <Filter>Icons</Filter>
+    </None>
+    <None Include="..\Src\SimRobotCore2\Icons\transmit_go.png">
+      <Filter>Icons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\Src\SimRobotCore2\ActuatorsWidget.h" />
+    <CustomBuild Include="..\Src\SimRobotCore2\SensorWidget.h" />
+    <CustomBuild Include="..\Src\SimRobotCore2\SimObjectWidget.h" />
+    <CustomBuild Include="..\Src\SimRobotCore2\SimRobotCore2.qrc" />
+  </ItemGroup>
+</Project>
