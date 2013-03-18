@@ -61,6 +61,8 @@ option BodyControl
   {
     action
     {
+      //HeadControl.mode = HeadControl.lookUp;
+      //Stand();
       Striker();
     }
   }

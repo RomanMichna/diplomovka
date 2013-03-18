@@ -7,7 +7,7 @@ input
   GameInfo theGameInfo;
   KeyStates theKeyStates;
   MotionInfo theMotionInfo;
-
+  BallModel theBallModel;
 
 };
 
@@ -45,7 +45,7 @@ option Soccer
   {
     decision
     {
-      if(stateTime > 1500)
+      if(stateTime > 100)
         return startSoccer;
     }
     action

@@ -45,7 +45,7 @@ option Soccer
   {
     decision
     {
-      if(stateTime > 1500)
+      if(stateTime > 100)
         return startSoccer;
     }
     action
@@ -80,8 +80,9 @@ option Soccer
     }
     action
     {
-      BodyControl();
-      HeadControl();
+      //BodyControl();
+      //HeadControl();
+      Striker();	
     }
   }
 };
