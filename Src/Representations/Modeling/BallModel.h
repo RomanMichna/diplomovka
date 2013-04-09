@@ -46,6 +46,11 @@ public:
   {
     return atan2(position.y, position.x);
   }
+
+  inline float getDistance() const
+  {
+    return position.abs();
+  }
 };
 
 /**
@@ -83,6 +88,7 @@ public:
 
   /** Draw the ball model in scene */
   void draw3D(const Pose2D& robotPose) const;
+
 };
 
 class GroundTruthBallModel : public BallModel

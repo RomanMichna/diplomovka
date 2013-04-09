@@ -32,6 +32,8 @@ public:
   /** Draws the free part of goal to the field view */
   void draw() const;
   
+  Vector2<> centerOfFreePart(); 
+
 private:
   /**
    * Makes the object streamable

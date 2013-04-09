@@ -8,6 +8,10 @@ input
   KeyStates theKeyStates;
   MotionInfo theMotionInfo;
   BallModel theBallModel;
+  FreePartOfOpponentGoalModel theFreePartOfOpponentGoalModel;
+  RobotPose theRobotPose;
+  FieldDimensions theFieldDimensions;
+  GoalPercept theGoalPercept;
 
 };
 
@@ -81,7 +85,7 @@ option Soccer
     action
     {
       //BodyControl();
-      //HeadControl();
+      HeadControl();
       Striker();	
     }
   }

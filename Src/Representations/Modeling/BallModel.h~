@@ -83,6 +83,7 @@ public:
 
   /** Draw the ball model in scene */
   void draw3D(const Pose2D& robotPose) const;
+ 
 };
 
 class GroundTruthBallModel : public BallModel

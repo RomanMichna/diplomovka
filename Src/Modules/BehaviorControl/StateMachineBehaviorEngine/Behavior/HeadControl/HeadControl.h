@@ -33,7 +33,7 @@ public:
   {
     action
     {
-      //LookAtBall();
+      LookAtBall();
     }
   }
   

@@ -6,15 +6,15 @@ option LookAtBall
   {
     decision
     {
-      if(theBallModel.timeWhenLastSeen > 2500)
+      if(timeSinceBallWasSeen() > 2500)
       	return lookUpAndDown;
     }
     action
     {
-      theHeadMotionRequest.cameraControlMode = HeadMotionRequest::autoCamera;
-      theHeadMotionRequest.mode = HeadMotionRequest::targetOnGroundMode;	
+      theHeadMotionRequest.mode = HeadMotionRequest::targetOnGroundMode;
+      theHeadMotionRequest.cameraControlMode = HeadMotionRequest::autoCamera;	
       theHeadMotionRequest.target = Vector3<>(theBallModel.estimate.position[0], theBallModel.estimate.position[1], 35.0);
-      theHeadMotionRequest.speed = 100;
+      theHeadMotionRequest.speed = 80;
     }
   }
 
@@ -22,7 +22,7 @@ option LookAtBall
   {
     decision
     {
-      if(theBallModel.timeWhenLastSeen < 500)
+      if(timeSinceBallWasSeen() < 500)
         return lookAtEstimate;
 
     }
@@ -31,4 +31,10 @@ option LookAtBall
       LookUpAndDown();
     }
   }
+  public:
+    float timeSinceBallWasSeen()
+    {
+       return (float)theFrameInfo.getTimeSince(theBallModel.timeWhenLastSeen);
+    }
+
 };
